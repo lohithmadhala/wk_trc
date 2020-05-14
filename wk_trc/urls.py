@@ -21,6 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', home_view, name="userList"),
     path('home/<int:id>/', user_home_view, name="userExerciseList"), #take user_name here <string>
-    path('home/user_name/exercise_name/', user_exercise_view, name="userExerciseDetail")
+    path('home/<int:id>/<slug:ex_name>/', user_exercise_view, name="userExerciseDetail")
 
 ]

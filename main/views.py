@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import User, Exercise, Workouts
-from .forms import UserForm, WorkoutsForm
+from .forms import UserForm, ExerciseForm
 
 # Create your views here.
 def home_view(request):
@@ -11,7 +11,7 @@ def home_view(request):
 
     addUserform = UserForm()
     if (request.method=="POST"):
-        print (request.POST)
+        # print (request.POST)
         addUserform = UserForm(request.POST)
         if addUserform.is_valid():
             addUserform.save()
@@ -24,19 +24,27 @@ def user_home_view(request, id):
     #Get user_name or user_id
     #Query the databases
     #Pass that query as the context to populate the list of exercises the user has
-    eList = ['DeadLift', 'Squat', 'Benchpress', 'Pullup', 'Overheadpress', 'BentOverRows']
+    #eList = ['DeadLift', 'Squat', 'Benchpress', 'Pullup', 'Overheadpress', 'BentOverRows']
     user = User.objects.get(id = id)
-    #eList = Workouts.objects.filter(user = user)
+    eList = Exercise.objects.all()
+    print(eList)
 
-    addExerciseForm = WorkoutsForm()
-    if (request.method == "POST"):
-        print(request.POST)
-        addExerciseForm = WorkoutsForm(request.POST)
-        if addExerciseForm.is_valid():
-            addExerciseForm.save()
-
-    context = {"eList":eList, "addExerciseForm": addExerciseForm}
+    context = {"eList":eList}
     return render(request, 'userhome.html', context)
 
-def user_exercise_view(request):
-    return render(request, 'userExerciseDetail.html', {})
+def user_exercise_view(request, id, ex_name):
+    user = User.objects.get(id = id)
+    exerciseInput = ExerciseForm()
+
+    print(request.POST)
+    if (request.method=="POST"):
+        if exerciseInput.is_valid():
+            exerciseInput.save()
+    else:
+        print("user going to enter data")
+        pre_filled = {'user': user, 'exercise': ex_name}
+        exerciseInput = ExerciseForm(initial = pre_filled)
+
+    prev = [100, 250, 500, 800, 1000, 1250]
+    context = {"ex_Form": exerciseInput, "prev":prev, "ex_name":ex_name, "user":user}
+    return render(request, 'userExerciseDetail.html', context)

@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Display user's exercise details</h1>
-  <h3>Display graph here</h3>
+
+  <h1> {{ user.user_name }}  </h1>
+  <h2> {{ ex_name }} data </h2>
+
+  <h3>Display graph here using this data</h3>
+  <h3> {{prev}} </h3>
+
+  <form class="form-inline mt-3" action="" method="POST">{% csrf_token%}
+    {{ex_Form.as_table}}
+    <input type="submit" name="" value="Add">
+  </form>
+
 {% endblock %}

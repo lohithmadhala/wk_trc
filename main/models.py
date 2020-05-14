@@ -1,18 +1,16 @@
 from django.db import models
 
 class Exercise(models.Model):
-    CHOICES =(
-        ('DeadLift', 'DeadLift'),
-        ('Rows', 'Rows'),
-        ('Benchpress', 'Benchpress'),
-        ('Squat', 'Squat'),
-        ('Overheadpress', 'Overheadpress'),
-        ('Pullup', "Pullup")
-    )
-    exercise_name = models.CharField(max_length=100, choices = CHOICES)
+    exercise_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return(self.exercise_name)
 
 class User(models.Model):
     user_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return(self.user_name)
 
 class Workouts(models.Model):
     reps = models.IntegerField(default = 0)

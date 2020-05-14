@@ -6,14 +6,15 @@ class UserForm(ModelForm):
         model = User
         fields = '__all__'
 
-class WorkoutsForm(ModelForm):
+class ExerciseForm(ModelForm):
     class Meta:
         model = Workouts
-        fields = [
-            'reps',
-            'sets',
-            'weight',
-            'volume',
-            'exercise',
-            'date'
-        ]
+        # fields = [
+        #     'sets',
+        #     'reps',
+        #     'weight',
+        #     'volume',
+        #     'date'
+        # ]
+
+        fields = '__all__'
