@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>List user's exercises here</h1>
+  <h3>Select exercise</h3>
+  {% for exercise in eList %}
+    <div class="container-fluid mt-3"><a href="{{ request.path }}{{ exercise }}/">{{ exercise }}</a></div>
+  {% endfor %}
+
+{% endblock %}
