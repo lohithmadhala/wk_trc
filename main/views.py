@@ -34,6 +34,7 @@ def user_home_view(request, id):
 
 def user_exercise_view(request, id, ex_name):
     user = User.objects.get(id = id)
+    exercises = Exercise.objects.get(exercise_name = ex_name)
     exerciseInput = ExerciseForm()
 
     print(request.POST)
@@ -42,7 +43,7 @@ def user_exercise_view(request, id, ex_name):
             exerciseInput.save()
     else:
         print("user going to enter data")
-        pre_filled = {'user': user, 'exercise': ex_name}
+        pre_filled = {'user': user, 'exercise': exercises}
         exerciseInput = ExerciseForm(initial = pre_filled)
 
     prev = [100, 250, 500, 800, 1000, 1250]
