@@ -19,8 +19,7 @@ from main.views import home_view, user_home_view, user_exercise_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', home_view, name="userList"),
-    path('home/<int:id>/', user_home_view, name="userExerciseList"), #take user_name here <string>
-    path('home/<int:id>/<slug:ex_name>/', user_exercise_view, name="userExerciseDetail")
-
+    path('', home_view, name="userList"),
+    path('<int:id>/', user_home_view, name="userExerciseList"), #take user_name here <string>
+    path('<int:id>/<slug:ex_name>/', user_exercise_view, name="userExerciseDetail")
 ]

@@ -20,3 +20,6 @@ class Workouts(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     exercise = models.ForeignKey(Exercise, on_delete = models.CASCADE)
     date = models.IntegerField()
+
+    def __str__(self):
+        return (self.exercise.exercise_name+" "+str(self.date)+" "+str(self.volume))

@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from .models import User, Exercise, Workouts
+from django import forms
 
 class UserForm(ModelForm):
     class Meta:
@@ -18,3 +19,7 @@ class ExerciseForm(ModelForm):
         # ]
 
         fields = '__all__'
+        widgets = {
+            'user': forms.HiddenInput(),
+            'exercise': forms.HiddenInput(),
+        }
