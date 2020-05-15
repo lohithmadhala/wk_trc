@@ -11,7 +11,8 @@ class ExerciseForm(ModelForm):
     class Meta:
         model = Workouts
 
-        fields = '__all__'
+        fields = ['reps', 'sets', 'weight', 'date']
+
         widgets = {
             'user': forms.HiddenInput(),
             'exercise': forms.HiddenInput(),

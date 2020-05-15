@@ -70,9 +70,6 @@ def user_exercise_view(request, id, ex_name):
             ex_form.save() #saves form
 
 
-
-
-
     else:
         #if the form is being rendered for first time => user is NOT entering form data
         #initialise form with 'user' and 'exercise' => user should NOT be able to make changes to these fields
