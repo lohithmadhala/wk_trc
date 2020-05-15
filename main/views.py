@@ -64,8 +64,8 @@ def user_exercise_view(request, id, ex_name):
             ex_form.volume = ex_volume #changes form's volume from default to calculatedVolume
 
 
-            ex_form.user = id
-            ex_form.exercise = ex_name
+            ex_form.user = user
+            ex_form.exercise = exercises
 
             ex_form.save() #saves form
 
@@ -81,6 +81,7 @@ def user_exercise_view(request, id, ex_name):
 
 
     prev_workouts = Workouts.objects.filter(user=id).filter(exercise = exercises.id) #List of previous workouts
+
 
     context = {"ex_Form": exerciseInput, "prev_workouts":prev_workouts, "ex_name":ex_name, "user":user}
     return render(request, 'userExerciseDetail.html', context)
