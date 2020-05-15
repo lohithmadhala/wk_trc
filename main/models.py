@@ -1,23 +1,28 @@
 from django.db import models
 
 class Exercise(models.Model):
+    #Exercise table -> exercise name, id
     exercise_name = models.CharField(max_length=100)
 
     def __str__(self):
         return(self.exercise_name)
 
-class User(models.Model):
+class UserDetails(models.Model):
+    #UserDetails table -> user_name, id
     user_name = models.CharField(max_length=100)
 
     def __str__(self):
         return(self.user_name)
 
 class Workouts(models.Model):
-    reps = models.IntegerField(default = 0)
-    sets = models.IntegerField(default = 0)
-    weight = models.IntegerField(default = 0)
-    volume = models.IntegerField(default = 0)
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    #Workouts table -> reps, sets, weight, volume, user (ForeignKey: one user can have many workouts), exercise (ForeignKey: one workout can have many exercise),
+    #volume (calculated by sets*reps*weight/100), and date
+
+    reps = models.IntegerField()
+    sets = models.IntegerField()
+    weight = models.IntegerField()
+    volume = models.IntegerField()
+    user = models.ForeignKey(UserDetails, on_delete = models.CASCADE)
     exercise = models.ForeignKey(Exercise, on_delete = models.CASCADE)
     date = models.IntegerField()
 

@@ -1,60 +1,66 @@
 from django.shortcuts import render
-from .models import User, Exercise, Workouts
+from .models import UserDetails, Exercise, Workouts
 from .forms import UserForm, ExerciseForm
 
 # Create your views here.
 def home_view(request):
-    #Display userlist
-    #Test Data
+    #Home page
+    #Displays list of users
+    # TODO: Replace this screen with a login page
 
-    userList = User.objects.all()
+    userList = UserDetails.objects.all() #sends the list of all users to the template
 
-    addUserform = UserForm()
+
     if (request.method=="POST"):
-        # print (request.POST)
-        addUserform = UserForm(request.POST)
-        print(addUserform.is_valid())
+        addUserform = UserForm(request.POST) #Form to add new user
         if addUserform.is_valid():
+            #if form is valid, save the user into the dataase
             addUserform.save()
 
+    addUserform = UserForm() #Re-render an empty form
     context = {"uList":userList, "addUserform": addUserform}
     return render(request, 'home.html', context)
 
 def user_home_view(request, id):
-    #Get user_name or user_id
-    #Query the databases
-    #Pass that query as the context to populate the list of exercises the user has
-    #eList = ['DeadLift', 'Squat', 'Benchpress', 'Pullup', 'Overheadpress', 'BentOverRows']
-    user = User.objects.get(id = id)
-    eList = Exercise.objects.all()
-    print(eList)
+    #Displays a list of exercise that belong to the user's workout
 
+    #Get user_id
+    #Query the database to retreive all the exercises
+    # TODO: Query to get exercises specific to the user (user will be able to add exercises)
+    #Pass that query as the context to populate the list of exercises the user has
+
+    user = UserDetails.objects.get(id = id) #user
+    eList = Exercise.objects.all() #exercises
     context = {"eList":eList}
     return render(request, 'userhome.html', context)
 
 def user_exercise_view(request, id, ex_name):
-    user = User.objects.get(id = id)
-    exercises = Exercise.objects.get(exercise_name = ex_name)
 
-    print(request.POST)
+    #Displays details about a specific exercise that belongs to a user's workout
+    #Details include = User's personal best (Max weight), and a graph that plots volume vs date
+    # TODO: Display grpahs
+
+
+    user = UserDetails.objects.get(id = id) #user
+    exercises = Exercise.objects.get(exercise_name = ex_name) #specific exercise object (benchpress, deadlift etc)
+
+    #Form fields = ['sets', 'reps', 'weight', 'volume', 'user', 'exercise', 'date']
+    #Form fields displayed to the user = ['sets', 'reps', 'weight', 'volume', 'date']
+    #Model fields = ['sets', 'reps', 'weight', 'volume', 'user', 'exercise', 'date']
     if (request.method=="POST"):
-        pre_filled = {'user': user, 'exercise': exercises}
+        #User entering data
         exerciseInput = ExerciseForm(request.POST)
-        print (exerciseInput.is_valid())
-
         if exerciseInput.is_valid():
-            print("valid")
+            # TODO: Override this method to perform more validations
             exerciseInput.save()
-
-
     else:
-        print("user going to enter data")
+        #if the form is being rendered for first time => user is NOT entering form data
+        #initialise form with 'user' and 'exercise' => user should NOT be able to make changes to these fields
         pre_filled = {'user': user, 'exercise': exercises}
         exerciseInput = ExerciseForm(initial = pre_filled)
 
-    prev = [100, 250, 500, 800, 1000, 1250]
 
-    prev = Workouts.objects.filter(user=id)
+    prev_workouts = Workouts.objects.filter(user=id).filter(exercise = exercises.id) #List of previous workouts
 
-    context = {"ex_Form": exerciseInput, "prev":prev, "ex_name":ex_name, "user":user}
+    context = {"ex_Form": exerciseInput, "prev_workouts":prev_workouts, "ex_name":ex_name, "user":user}
     return render(request, 'userExerciseDetail.html', context)
