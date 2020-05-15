@@ -15,4 +15,5 @@ class ExerciseForm(ModelForm):
         widgets = {
             'user': forms.HiddenInput(),
             'exercise': forms.HiddenInput(),
+            'volume': forms.HiddenInput(),
         }

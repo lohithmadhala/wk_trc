@@ -52,7 +52,27 @@ def user_exercise_view(request, id, ex_name):
         exerciseInput = ExerciseForm(request.POST)
         if exerciseInput.is_valid():
             # TODO: Override this method to perform more validations
-            exerciseInput.save()
+
+            ex_form = exerciseInput.save(commit=False) #get form object before saving
+
+            #gets sets, reps, weight and calculates volume
+            ex_sets = int(request.POST['sets'])
+            ex_reps =  int(request.POST['reps'])
+            ex_weight = int(request.POST['weight'])
+            ex_volume = ex_sets*ex_reps*ex_weight
+
+            ex_form.volume = ex_volume #changes form's volume from default to calculatedVolume
+
+
+            ex_form.user = id
+            ex_form.exercise = ex_name
+
+            ex_form.save() #saves form
+
+
+
+
+
     else:
         #if the form is being rendered for first time => user is NOT entering form data
         #initialise form with 'user' and 'exercise' => user should NOT be able to make changes to these fields

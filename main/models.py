@@ -16,12 +16,12 @@ class UserDetails(models.Model):
 
 class Workouts(models.Model):
     #Workouts table -> reps, sets, weight, volume, user (ForeignKey: one user can have many workouts), exercise (ForeignKey: one workout can have many exercise),
-    #volume (calculated by sets*reps*weight/100), and date
+    #volume (calculated by sets*reps*weight), and date
 
     reps = models.IntegerField()
     sets = models.IntegerField()
     weight = models.IntegerField()
-    volume = models.IntegerField()
+    volume = models.IntegerField(default = 0)
     user = models.ForeignKey(UserDetails, on_delete = models.CASCADE)
     exercise = models.ForeignKey(Exercise, on_delete = models.CASCADE)
     date = models.IntegerField()
