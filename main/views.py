@@ -77,8 +77,13 @@ def user_exercise_view(request, id, ex_name):
         exerciseInput = ExerciseForm(initial = pre_filled)
 
 
-    prev_workouts = Workouts.objects.filter(user=id).filter(exercise = exercises.id) #List of previous workouts
+    prev_workouts = Workouts.objects.filter(user=id).filter(exercise = exercises.id)
+     #List of previous workouts
+    p = []
+    for i in prev_workouts:
+        p.append([i.date, i.volume])
+    print(p)
 
 
-    context = {"ex_Form": exerciseInput, "prev_workouts":prev_workouts, "ex_name":ex_name, "user":user}
+    context = {"ex_Form": exerciseInput, "prev_workouts":p, "ex_name":ex_name, "user":user}
     return render(request, 'userExerciseDetail.html', context)

@@ -5,17 +5,23 @@
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
 
+      var graphData_prev_workouts = {{prev_workouts}};
+      graphData_prev_workouts.unshift(['Date', 'Volume']);
+      console.log(graphData_prev_workouts);
+
       function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2004',  1000,      400],
-          ['2005',  1170,      460],
-          ['2006',  660,       1120],
-          ['2007',  1030,      540]
-        ]);
+        // var data = google.visualization.arrayToDataTable([
+        //   ['Date', 'Volume'],
+        //   ['2004',  1000],
+        //   ['2005',  1170],
+        //   ['2006',  660,],
+        //   ['2007',  1030]
+        // ]);
+
+        var data = google.visualization.arrayToDataTable(graphData_prev_workouts);
 
         var options = {
-          title: 'Company Performance',
+          title: '{{ ex_name }} progress',
           curveType: 'function',
           legend: { position: 'bottom' }
         };
