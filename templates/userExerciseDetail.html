@@ -16,7 +16,9 @@
         var options = {
           title: '{{ ex_name }} progress',
           curveType: 'function',
-          legend: { position: 'bottom' },
+          legend: { position: '' },
+          hAxis: {title: 'Date'},
+          vAxis: {title: 'Volume'},
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
@@ -35,12 +37,6 @@
 
 <div id="curve_chart" style="width: 900px; height: 500px"></div>
 
-
-{% for workout in prev_workouts %}
-<h3>{{workout}}</h3>
-{% endfor %}
-
-
 <form class="form-inline mt-3" id="exercised-data" action="" method="POST">{% csrf_token%}
   <div class=""> Sets: {{ex_Form.sets}} </div>
   <div class="ml-5"> Reps: {{ex_Form.reps}} </div>
@@ -49,8 +45,10 @@
   <input type="submit" name="" value="Add">
 </form>
 
-<script>
-</script>
+{% for workout in prev_workouts %}
+<h3>{{workout}}</h3>
+{% endfor %}
+
 
 
 {% endblock %}
