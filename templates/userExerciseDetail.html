@@ -10,20 +10,13 @@
       console.log(graphData_prev_workouts);
 
       function drawChart() {
-        // var data = google.visualization.arrayToDataTable([
-        //   ['Date', 'Volume'],
-        //   ['2004',  1000],
-        //   ['2005',  1170],
-        //   ['2006',  660,],
-        //   ['2007',  1030]
-        // ]);
 
         var data = google.visualization.arrayToDataTable(graphData_prev_workouts);
 
         var options = {
           title: '{{ ex_name }} progress',
           curveType: 'function',
-          legend: { position: 'bottom' }
+          legend: { position: 'bottom' },
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
