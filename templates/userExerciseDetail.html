@@ -1,11 +1,41 @@
 {% extends 'base.html' %}
+{% block chart %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses'],
+          ['2004',  1000,      400],
+          ['2005',  1170,      460],
+          ['2006',  660,       1120],
+          ['2007',  1030,      540]
+        ]);
+
+        var options = {
+          title: 'Company Performance',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+{% endblock %}
+
+
 
 {% block content %}
 
 <h1> {{ user.user_name }} </h1>
 <h2> {{ ex_name }} data </h2>
 
-<h3>Display graph here using this data</h3>
+<div id="curve_chart" style="width: 900px; height: 500px"></div>
+
 
 {% for workout in prev_workouts %}
 <h3>{{workout}}</h3>
