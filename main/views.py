@@ -98,4 +98,5 @@ def user_exercise_delete_confirmation_view(request, id, ex_name, ex_id):
     user = UserDetails.objects.get(id = id);
     exercises = Exercise.objects.get(exercise_name = ex_name)
     workouts = Workouts.objects.filter(user=id).filter(exercise = exercises.id).filter(id = ex_id).delete()
+
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
