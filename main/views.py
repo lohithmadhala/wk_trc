@@ -2,8 +2,12 @@ from django.shortcuts import render, redirect
 from .models import UserDetails, Exercise, Workouts
 from .forms import UserForm, ExerciseForm
 from django.http import HttpResponseRedirect
+from django.core.exceptions import ValidationError
+
 
 # Create your views here.
+
+
 def home_view(request):
     #Home page
     #Displays list of users
@@ -11,12 +15,17 @@ def home_view(request):
 
     userList = UserDetails.objects.all() #sends the list of all users to the template
 
-
+    #Sign up
     if (request.method=="POST"):
         addUserform = UserForm(request.POST) #Form to add new user
         if addUserform.is_valid():
             #if form is valid, save the user into the dataase
-            addUserform.save()
+            addUserform.save(commit=False)
+            if userList.filter(user_name=request.POST['user_name']).exists():
+                #userName already present
+                raise ValidationError(('Username already exists'), code='invalid')
+            else:
+                addUserform.save()
 
     addUserform = UserForm() #Re-render an empty form
     context = {"uList":userList, "addUserform": addUserform}

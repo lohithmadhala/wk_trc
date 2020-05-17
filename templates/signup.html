@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form class="form-inline mt-3" action="" method="POST">{% csrf_token %}
+  {{ addUserform }}
+  <!-- <button type="button" name="button" class="btn btn-danger ml-3 p-1 pl-2 pr-2">Add</button> -->
+  <input type="submit" name="" value="signup">
+</form>
+
+
+{% endblock %}
