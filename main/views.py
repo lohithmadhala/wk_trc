@@ -47,7 +47,7 @@ def user_exercise_view(request, id, ex_name):
     #Form fields = ['sets', 'reps', 'weight', 'volume', 'user', 'exercise', 'date']
     #Form fields displayed to the user = ['sets', 'reps', 'weight', 'volume', 'date']
     #Model fields = ['sets', 'reps', 'weight', 'volume', 'user', 'exercise', 'date']
-    if (request.method=="POST"):
+    if (request.method=="POST" and ("addWorkout" in request.POST)):
         #User entering data
         exerciseInput = ExerciseForm(request.POST)
         if exerciseInput.is_valid():
@@ -62,13 +62,9 @@ def user_exercise_view(request, id, ex_name):
             ex_volume = ex_sets*ex_reps*ex_weight
 
             ex_form.volume = ex_volume #changes form's volume from default to calculatedVolume
-
-
             ex_form.user = user
             ex_form.exercise = exercises
-
             ex_form.save() #saves form
-
 
     else:
         #if the form is being rendered for first time => user is NOT entering form data
@@ -82,8 +78,17 @@ def user_exercise_view(request, id, ex_name):
     p = []
     for i in prev_workouts:
         p.append([i.date, i.volume])
-    print(p)
 
 
     context = {"ex_Form": exerciseInput, "prev_workouts":p, "ex_name":ex_name, "user":user}
     return render(request, 'userExerciseDetail.html', context)
+
+def user_exercise_delete_view(request, id, ex_name):
+    user = UserDetails.objects.get(id = id);
+    exercises = Exercise.objects.get(exercise_name = ex_name)
+    workouts = Workouts.objects.filter(user=id).filter(exercise = exercises.id)
+
+    if (request.method=='POST' and 'deleteWorkout' in request.POST):
+        print(request.POST, id, ex_name)
+    context = {"workouts": workouts}
+    return render(request, 'list_delete.html', context)

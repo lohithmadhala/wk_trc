@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  {% for workout in workouts %}
+    <h5>{{ workout.date }} {{ workout.volume }}</h5>
+  {% endfor %}
+
+{% endblock %}
