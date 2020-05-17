@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import UserDetails, Exercise, Workouts
 from .forms import UserForm, ExerciseForm
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 def home_view(request):
@@ -92,3 +93,9 @@ def user_exercise_delete_view(request, id, ex_name):
         print(request.POST, id, ex_name)
     context = {"workouts": workouts}
     return render(request, 'list_delete.html', context)
+
+def user_exercise_delete_confirmation_view(request, id, ex_name, ex_id):
+    user = UserDetails.objects.get(id = id);
+    exercises = Exercise.objects.get(exercise_name = ex_name)
+    workouts = Workouts.objects.filter(user=id).filter(exercise = exercises.id).filter(id = ex_id).delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

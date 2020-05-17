@@ -3,7 +3,9 @@
 {% block content %}
 
   {% for workout in workouts %}
-    <h5>{{ workout.date }} {{ workout.volume }}</h5>
+  <div>
+    <a href="{{ request.path }}{{ delete }}{{ workout.id }}">{{ workout.date }} {{ workout.volume }}</a>
+  </div>
   {% endfor %}
 
 {% endblock %}
