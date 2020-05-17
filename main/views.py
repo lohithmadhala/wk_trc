@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import UserDetails, Exercise, Workouts
 from .forms import UserForm, ExerciseForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.core.exceptions import ValidationError
 
 
@@ -16,20 +16,44 @@ def home_view(request):
     userList = UserDetails.objects.all() #sends the list of all users to the template
 
     #Sign up
-    if (request.method=="POST"):
+    if (request.method=="POST" and 'signup' in request.POST):
         addUserform = UserForm(request.POST) #Form to add new user
         if addUserform.is_valid():
             #if form is valid, save the user into the dataase
-            addUserform.save(commit=False)
             if userList.filter(user_name=request.POST['user_name']).exists():
                 #userName already present
                 raise ValidationError(('Username already exists'), code='invalid')
             else:
                 addUserform.save()
+    if (request.method=="POST" and 'login' in request.POST):
+        uName = request.POST['user_name']
+        pWord = request.POST['password']
+        addUserform = UserForm(request.POST)
+        print(uName, pWord)
+        if addUserform.is_valid():
+            print("Valid")
+            if userList.filter(user_name=uName).exists() and userList.filter(password=pWord):
+                print("user present")
+                userObj = UserDetails.objects.get(user_name = uName)
+                return user_home_view(request, userObj.id)
+    else:
+        addUserform = UserForm() #Re-render an empty form
 
-    addUserform = UserForm() #Re-render an empty form
     context = {"uList":userList, "addUserform": addUserform}
     return render(request, 'home.html', context)
+
+
+
+
+    # elif (request.method == 'POST' and 'Sign in' in request.POST):
+    #     uName = request.POST['user_name']
+    #     pWord = request.POST['password']
+    #     print(uName, pWord)
+    #     return render(request, 'userhome.html',{})
+    # else:
+    #     return render(request, 'home.html', {})
+
+
 
 def user_home_view(request, id):
     #Displays a list of exercise that belong to the user's workout
@@ -44,7 +68,7 @@ def user_home_view(request, id):
     context = {"eList":eList}
     return render(request, 'userhome.html', context)
 
-def user_exercise_view(request, id, ex_name):
+def user_exercise_view(request, ex_name):
 
     #Displays details about a specific exercise that belongs to a user's workout
     #Details include = User's personal best (Max weight), and a graph that plots volume vs date
