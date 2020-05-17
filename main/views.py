@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import UserDetails, Exercise, Workouts
 from .forms import UserForm, ExerciseForm
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ValidationError
 
 
@@ -25,35 +25,28 @@ def home_view(request):
                 raise ValidationError(('Username already exists'), code='invalid')
             else:
                 addUserform.save()
+    #Sign in
     if (request.method=="POST" and 'login' in request.POST):
         uName = request.POST['user_name']
         pWord = request.POST['password']
-        addUserform = UserForm(request.POST)
-        print(uName, pWord)
-        if addUserform.is_valid():
-            print("Valid")
+        loginUser = UserForm(request.POST)
+        if loginUser.is_valid():
             if userList.filter(user_name=uName).exists() and userList.filter(password=pWord):
-                print("user present")
+                # if user name exists and password matches
+                # redirect to exercises page
+                #Security flaw
                 userObj = UserDetails.objects.get(user_name = uName)
-                return user_home_view(request, userObj.id)
+                url = request.path+str(userObj.id)+"/"
+                return redirect(url)
+            else:
+                #if user name does not exist or password does not match
+                loginUser = UserForm() #Render empty form 
+                return redirect('/')
     else:
         addUserform = UserForm() #Re-render an empty form
 
     context = {"uList":userList, "addUserform": addUserform}
     return render(request, 'home.html', context)
-
-
-
-
-    # elif (request.method == 'POST' and 'Sign in' in request.POST):
-    #     uName = request.POST['user_name']
-    #     pWord = request.POST['password']
-    #     print(uName, pWord)
-    #     return render(request, 'userhome.html',{})
-    # else:
-    #     return render(request, 'home.html', {})
-
-
 
 def user_home_view(request, id):
     #Displays a list of exercise that belong to the user's workout
@@ -68,7 +61,7 @@ def user_home_view(request, id):
     context = {"eList":eList}
     return render(request, 'userhome.html', context)
 
-def user_exercise_view(request, ex_name):
+def user_exercise_view(request, id, ex_name):
 
     #Displays details about a specific exercise that belongs to a user's workout
     #Details include = User's personal best (Max weight), and a graph that plots volume vs date

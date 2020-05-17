@@ -2,11 +2,6 @@
 
 
 {% block content %}
-  <h1>User list to be displayed here</h1>
-  <h3>Select your username</h3>
-  {% for user in uList %}
-    <div class="container-fluid mt-3"><a href="{{ request.path }}{{user.id}}">{{ user.user_name }}</a></div>
-  {% endfor %}
 
   <form class="form-inline mt-3" action="" method="POST">{% csrf_token %}
     {{ addUserform }}
