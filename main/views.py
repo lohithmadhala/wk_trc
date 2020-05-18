@@ -101,13 +101,13 @@ def user_exercise_view(request, id, ex_name):
 
 
     prev_workouts = Workouts.objects.filter(user=id).filter(exercise = exercises.id)
-     #List of previous workouts
-    p = []
+     #List of previous workouts for displaying in graph
+    prev_workouts_list = []
     for i in prev_workouts:
-        p.append([i.date, i.volume])
+        prev_workouts_list.append([i.date, i.volume])
 
 
-    context = {"ex_Form": exerciseInput, "prev_workouts":p, "ex_name":ex_name, "user":user}
+    context = {"ex_Form": exerciseInput, "prev_workouts":prev_workouts_list, "ex_name":ex_name, "user":user}
     return render(request, 'userExerciseDetail.html', context)
 
 def user_exercise_delete_view(request, id, ex_name):

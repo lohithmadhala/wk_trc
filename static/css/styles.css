@@ -2,6 +2,10 @@
   display: block;
 }
 
+.signForm{
+  text-align: center;
+}
+
 .singbutton{
   margin-left: 2%;
 }
@@ -39,10 +43,11 @@
 }
 
 .list a:hover {
+  color: black;
   font-size: 35px;
 }
 
-.displayExGreet{
+.displayGreet{
   display: block;
   height: 50px;
   font-size: 30px;
@@ -51,7 +56,8 @@
   margin-top: 10px;
   text-align: center;
 }
-.displayExMessage{
+
+.displayMessage{
   display: block;
   height: 30px;
   font-size: 20px;
@@ -91,6 +97,14 @@
 .delInstr{
   background-color: grey;
   height: 50px;
+  margin-top: 5px;
+  border-radius: 5px;
+  color: white;
+}
+
+.delInstrMess{
+  background-color: grey;
+  height: 30px;
   margin-top: 5px;
   border-radius: 5px;
   color: white;
