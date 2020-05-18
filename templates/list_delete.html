@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <div class="container displayExGreet text-white"> Select a Workout to delete </div>
+  <div class="container displayExMessage mb-5 text-white"> This action cannot be undone!</div>
 
   {% for workout in workouts %}
-  <div>
-    <a href="{{ request.path }}{{ delete }}{{ workout.id }}">{{ workout.date }} {{ workout.volume }}</a>
+  <div class="container list">
+    <a href="{{ request.path }}{{ delete }}{{ workout.id }}">Date: {{ workout.date }} Volume: {{ workout.volume }}</a>
   </div>
   {% endfor %}
 

@@ -2,17 +2,23 @@
 
 
 {% block content %}
+  <div class="signup">
+    <form class="form-block mt-3" action="" method="POST">{% csrf_token %}
+      {{ addUserform }}
+      <!-- <button type="button" name="button" class="btn btn-danger ml-3 p-1 pl-2 pr-2">Add</button> -->
+      <input type="submit" name="signup" value="Sign up" class="singbutton">
+      <small id="emailHelp" class="form-text text-muted">If username already exists, sign in.</small>
+    </form>
+  </div>
 
-  <form class="form-inline mt-3" action="" method="POST">{% csrf_token %}
-    {{ addUserform }}
-    <!-- <button type="button" name="button" class="btn btn-danger ml-3 p-1 pl-2 pr-2">Add</button> -->
-    <input type="submit" name="signup" value="Sign up">
-  </form>
+  <div class="signin">
+    <form class="form mt-3" action="" method="POST">{% csrf_token %}
+      {{ addUserform }}
+      <!-- <button type="button" name="button" class="btn btn-danger ml-3 p-1 pl-2 pr-2">Add</button> -->
+      <input type="submit" name="login" value="Sign in" class="singbutton">
+    </form>
+  </div>
 
-  <form class="form-inline mt-3" action="" method="POST">{% csrf_token %}
-    {{ addUserform }}
-    <!-- <button type="button" name="button" class="btn btn-danger ml-3 p-1 pl-2 pr-2">Add</button> -->
-    <input type="submit" name="login" value="Sign in">
-  </form>
+
 
 {% endblock %}

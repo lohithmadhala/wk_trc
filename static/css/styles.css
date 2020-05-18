@@ -1,4 +1,97 @@
-body{
+.main-content{
+  display: block;
+}
 
-  color: red;
+.singbutton{
+  margin-left: 2%;
+}
+.greet{
+  font-size: 50px;
+  background-color: grey;
+  border-radius: 5px;
+  color: white;
+}
+
+.greet-message{
+  background-color: grey;
+  font-size: 25px;
+  border-radius: 5px;
+  color: white;
+}
+
+.list{
+  height: 50px;
+  background-color: grey;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  font-size: 30px;
+}
+
+.list a{
+  text-decoration: none;
+  color: white;
+  transition: 0.3s;
+}
+
+.list:hover{
+  height: 55px;
+}
+
+.list a:hover {
+  font-size: 35px;
+}
+
+.displayExGreet{
+  display: block;
+  height: 50px;
+  font-size: 30px;
+  background-color: grey;
+  border-radius: 5px;
+  margin-top: 10px;
+  text-align: center;
+}
+.displayExMessage{
+  display: block;
+  height: 30px;
+  font-size: 20px;
+  background-color: grey;
+  border-radius: 5px;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.addWorkForm{
+  display: flex;
+  justify-content: center;
+}
+
+.deleteWorkForm{
+  text-align: center;
+}
+
+.deleteWorkoutbutton{
+  background-color: red;
+  border-radius: 50%;
+  height: 50px;
+}
+
+.addWorkoutbutton{
+}
+
+.deleteWorkList{
+  height: 50px;
+  background-color: grey;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  font-size: 30px;
+}
+
+.delInstr{
+  background-color: grey;
+  height: 50px;
+  margin-top: 5px;
+  border-radius: 5px;
+  color: white;
 }
