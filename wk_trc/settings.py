@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-
+import django.contrib.staticfiles
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,6 +26,10 @@ SECRET_KEY = 'snxhp)+q=#ou0@a4p770@+8!si+yz-iw2$-8o%q@50%w%=u(eb'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 
 # Application definition

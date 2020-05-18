@@ -40,7 +40,7 @@ def home_view(request):
                 return redirect(url)
             else:
                 #if user name does not exist or password does not match
-                loginUser = UserForm() #Render empty form 
+                loginUser = UserForm() #Render empty form
                 return redirect('/')
     else:
         addUserform = UserForm() #Re-render an empty form
@@ -58,7 +58,7 @@ def user_home_view(request, id):
 
     user = UserDetails.objects.get(id = id) #user
     eList = Exercise.objects.all() #exercises
-    context = {"eList":eList}
+    context = {"eList":eList, 'user': user}
     return render(request, 'userhome.html', context)
 
 def user_exercise_view(request, id, ex_name):
